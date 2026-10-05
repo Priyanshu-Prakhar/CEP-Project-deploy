@@ -14,7 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
-SECRET_KEY = os.environ["django-insecure-change-me-for-production-cep-healthcare-2026"]
+SECRET_KEY = "django-insecure-change-me-for-production-cep-healthcare-2026"
 
 DEBUG = True
 
