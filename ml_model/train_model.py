@@ -9,14 +9,6 @@ Outputs into ml_model/:
     disease_model.pkl   trained model + the exact feature order it expects
     model_meta.json     top-1 / top-3 accuracy, per-class scores, confusion matrix
 
-WHY THE ACCURACY IS LOWER THAN THE v1 MODEL
--------------------------------------------
-v1 had 30 conditions and scored 98%. This has 70, and scores lower. That is the
-correct direction. More conditions means more genuine overlap - a great many
-things present as fever plus fatigue - and a model that still scored 98% across
-70 classes would be telling you the generated data is too tidy, not that the
-model is good.
-
 Two things are done here to keep the number honest:
 
 1. EXACT DUPLICATE ROWS ARE REMOVED before the split. The widely used public
@@ -28,9 +20,7 @@ Two things are done here to keep the number honest:
    alternatives, so top-3 is the metric that matches what the user actually
    sees. It is also the honest one for a triage tool.
 
-URGENCY ACCURACY is reported too, and it matters more than either. Getting the
-condition wrong but the urgency right still sends the person to the right place
-at the right time.
+URGENCY ACCURACY is reported.
 """
 
 import json
@@ -96,7 +86,7 @@ def build_dataset():
         for _ in range(SAMPLES_PER_DISEASE):
             row = np.zeros(n, dtype=np.int8)
 
-            # background noise across symptoms only
+            # background noise symptoms only
             noise = rng.random(len(sym_idx)) < P_NOISE
             row[np.array(sym_idx)[noise]] = 1
 
@@ -105,19 +95,19 @@ def build_dataset():
                 row[secondary], (rng.random(len(secondary)) < P_SECONDARY).astype(np.int8)
             )
 
-            # context: informative where we have a prior, weak elsewhere
+            # context
             for f in CONTEXT_FEATURES:
                 p = ctx_prior.get(f, P_CTX_DEFAULT)
                 if rng.random() < p:
                     row[idx[f]] = 1
 
-            # labs: most checks are simply not done, so these stay mostly zero
+            # labs
             for f in LAB_FEATURES:
                 p = lab_prior.get(f, P_LAB_NOISE)
                 if rng.random() < p:
                     row[idx[f]] = 1
 
-            # --- apply under-reporting to the symptom columns only ---------
+            # apply under-reporting to the symptom columns only
             thoroughness = rng.beta(REPORTING_ALPHA, REPORTING_BETA)
             present = [i for i in sym_idx if row[i] == 1]
             for i in present:
@@ -149,7 +139,7 @@ def main():
     X, y = build_dataset()
     print(f"  raw samples : {len(X)}")
 
-    # --- remove exact duplicates -------------------------------------------
+    #remove exact duplicates
     combined = X.copy()
     combined["__label"] = y.values
     before = len(combined)
@@ -182,7 +172,7 @@ def main():
     top3 = top_k_accuracy(model, X_test, y_test, 3)
     top5 = top_k_accuracy(model, X_test, y_test, 5)
 
-    # --- urgency accuracy: the metric that actually matters -----------------
+    #urgency accuracy
     urgency_of = {n: p["urgency"] for n, p in DISEASES.items()}
     true_u = [urgency_of[c] for c in y_test]
     pred_u = [urgency_of[c] for c in y_pred]
@@ -203,7 +193,7 @@ def main():
     importances = sorted(zip(ALL_FEATURES, model.feature_importances_),
                          key=lambda t: t[1], reverse=True)[:20]
 
-    # most confused pairs, useful for the report
+    # most confused pairs
     confusions = []
     for i, a in enumerate(labels_sorted):
         for j, b in enumerate(labels_sorted):

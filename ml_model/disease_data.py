@@ -14,18 +14,17 @@ Each entry carries:
     tests          what to ask the doctor to check
     sensitive      True for mental health, which is presented differently
 
-WHY THERE IS NO "MEDICINES TO TAKE" FIELD
+THERE IS NO "MEDICINES TO TAKE" FIELD
 -----------------------------------------
 This tool deliberately never names a medicine to take.
 
-The clearest reason is dengue and flu. They share fever, body ache, headache and
+For eg. dengue and flu. They share symptoms like fever, body ache, headache and
 fatigue, so they are among the pairs this model most often confuses. Ibuprofen is
 ordinary for flu and dangerous in dengue, because of the bleeding risk. The
-correct advice is opposite for the two conditions that are hardest to tell apart.
+correct advice is opposite for the two conditions.
 
-An app confident enough to name a drug is confident enough to cause harm that
-way. So the `avoid` field exists instead: harm reduction rather than prescribing.
-Telling someone what not to swallow is safe even when the prediction is wrong.
+A model confident enough to name a drug is confident enough to cause harm that
+way. So the `avoid` field exists instead.
 """
 
 DISEASES = {
