@@ -19,6 +19,10 @@ from ml_model.knowledge_base import CONTEXT_QUESTIONS, LAB_TESTS
 from . import engine, report_ocr
 from .models import DiseaseInfo, SymptomCheck
 
+import logging
+from django.db import DatabaseError
+log = logging.getLogger(__name__)
+
 SESSION_KEY = "assessment"
 
 
@@ -294,12 +298,16 @@ def result(request):
         return redirect("prediction:start")
 
     if outcome["kind"] == "emergency":
-        SymptomCheck.objects.create(
-            symptoms=",".join(state["symptoms"]),
-            red_flag=outcome["flag"]["code"], urgency="emergency",
-            used_labs=bool(state.get("labs")), used_ocr=state.get("used_ocr", False),
-            answered_questions=state.get("answered", 0), city=city,
-        )
+        
+        def _log_check():
+         """Analytics only - must never break the user's result page."""
+        try:
+            SymptomCheck.objects.create(symptoms=",".join(state["symptoms"]),
+                    predicted_disease=top["disease"], confidence=top["confidence"],
+                    urgency=outcome["urgency"], used_labs=bool(state.get("labs")),
+                    answered_questions=state.get("answered", 0), city=city,)
+        except DatabaseError:
+            log.warning("SymptomCheck not recorded", exc_info=True)
         qs = Hospital.objects.filter(is_active=True, has_emergency=True)
         if city:
             qs = qs.filter(city__iexact=city) or qs
@@ -309,11 +317,10 @@ def result(request):
         })
 
     top = outcome["top"]
-    SymptomCheck.objects.create(
+    _log_check(
         symptoms=",".join(state["symptoms"]),
         predicted_disease=top["disease"], confidence=top["confidence"],
         urgency=outcome["urgency"], used_labs=bool(state.get("labs")),
-        used_ocr=state.get("used_ocr", False),
         answered_questions=state.get("answered", 0), city=city,
     )
 
