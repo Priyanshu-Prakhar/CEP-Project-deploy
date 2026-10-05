@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: change this before deploying anywhere public.
 #SECRET_KEY = "django-insecure-change-me-for-production-cep-healthcare-2026"
 
-SECRET_KEY = os.environ["django-insecure-change-me-for-production-cep-healthcare-2026"]
+SECRET_KEY = os.environ["abcd12345678"]
 
 DEBUG = True
 
