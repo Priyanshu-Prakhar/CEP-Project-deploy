@@ -1,16 +1,7 @@
 /* ==========================================================================
    Arogya Disha  v3
    --------------------------------------------------------------------------
-   DIRECTION
-   v1 was a Primary Health Centre wall poster. v2 was a clinical instrument -
-   correct, restrained, and a little cold. v3 keeps the discipline and gives it
-   a face: warm cream ground instead of grey, a deep jewel-tone brand, gradient
-   depth in the hero and section breaks, generous radii, layered shadows, and
-   display type with real presence.
-
-   The rules that did NOT change, because they are load-bearing:
-     * colour still encodes urgency and nothing else - the warm ramp is never
-       decorative, and the accent green never carries a health signal
+     * colour encodes urgency only
      * urgency is never colour alone; the scale stays labelled
      * every text/background pair clears WCAG AA
      * motion is opt-out via prefers-reduced-motion

@@ -22,22 +22,19 @@
 
         <div class="panel">
           <h3>Feature 1 — Scheme directory</h3>
-          <p>A <code class="mono">Scheme</code> model holds eligibility, documents and application steps as separate fields, so the site can render them as tickss instead of a wall of text. Every record carries a <b>last verified</b> date, because scheme amounts change and a stale figure sent someone to the wrong counter is worse than no figure at all.</p>
-          <p class="mb0">The filter runs on ration card colour, because that is how eligibility actually works in Maharashtra. Schemes open to everyone are always included in a filtered list rather than hidden.</p>
+          <p>A <code class="mono">Scheme</code> model holds eligibility, documents and application steps as separate fields. Every record carries a <b>last verified</b> date.</p>
         </div>
 
         <div class="panel">
-          <h3>Feature 2 — Hospital beds</h3>
-          <p>There is no public real-time API for hospital bed occupancy in India. We did not pretend otherwise. Bed counts live in a <code class="mono">BedAvailability</code> table that an administrator edits directly in the Django admin, which is exactly the interface a hospital data-entry operator would use in a real deployment.</p>
-          <p>Every page showing a bed count also shows how long ago it was updated, and flags records older than 24 hours as possibly stale. The list page carries a permanent banner saying the data is a demonstration.</p>
-          <p class="mb0">This was a deliberate choice: a simulation that admits it is a simulation is honest engineering. A fake live feed would not be.</p>
+          <h3>Feature 2 — Hospitals</h3>
+          <p>A list of hospitals in Pune. This is not a complete list of all the hospitals. </p>
         </div>
 
         <div class="panel">
           <h3>Feature 3 — Symptom checker</h3>
-          <p>A <b>Random Forest classifier</b> trained on symptom, context and lab features. Training data is generated from clinically-informed condition profiles, and the generator deliberately simulates <b>under-reporting</b> — a real person ticks three or four boxes, not the eight a textbook lists.</p>
-          <p>An earlier version scored 98% over 30 conditions. This one scores lower, and that is the point: it covers 70 conditions that genuinely overlap, so it is sitting a harder exam. An accuracy near 98% here would mean the data was too tidy to be worth anything. The confusions it does make are the clinically honest ones — gastroenteritis with food poisoning, influenza with viral fever.</p>
-          <p class="mb0"><b>Urgency is the headline answer, not the condition name.</b> "See a doctor today" is defensible on this evidence; "you have typhoid" is not, and invites self-medication.</p>
+          <p>A <b>Random Forest classifier</b> trained on symptom, context and lab features. Training data is generated from clinically-informed condition profiles, and the generator deliberately simulates <b>under-reporting</b> .</p>
+
+          <p class="mb0"><b>Urgency is the main answer instead of the condition.</b>
 
           {% if meta %}
           <dl style="margin:20px 0 0">

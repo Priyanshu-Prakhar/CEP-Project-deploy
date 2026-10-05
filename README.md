@@ -40,7 +40,7 @@ sudo apt install tesseract-ocr     # Ubuntu / Debian
 python ml_model/train_model.py
 
 # 4. Create the database
-python manage.py makemigrations core schemes hospitals prediction
+python manage.py makemigrations core schemes hospitals prediction bmi health_kit
 python manage.py migrate
 
 # 5. Load schemes, hospitals, bed data, conditions and tips
@@ -68,6 +68,7 @@ healthcare-awareness-platform/
 ├── manage.py
 ├── requirements.txt
 ├── config/                     Django settings, root URLs, WSGI/ASGI
+├── bmi/                        Calculate your bmi
 ├── core/                       Home page, About page, health tips
 │   └── management/commands/
 │       └── seed_data.py        All seed data lives here
@@ -172,6 +173,10 @@ hospital type, PM-JAY empanelment, free beds, and free-text search.
 
 The checker runs in four steps: **symptoms → details (+ optional lab report) →
 adaptive follow-up questions → result.**
+
+## Feature 4 - BMI Calculator
+
+This calculates your bmi (Body Mass Index) using your height and weight
 
 ### Urgency is the primary output
 
