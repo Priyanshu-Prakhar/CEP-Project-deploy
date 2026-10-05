@@ -8,7 +8,13 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "abcd1234567"
+# SECURITY WARNING: change this before deploying anywhere public.
+#SECRET_KEY = "django-insecure-change-me-for-production-cep-healthcare-2026"
+
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True
+SECRET_KEY = os.environ["django-insecure-change-me-for-production-cep-healthcare-2026"]
 
 DEBUG = True
 
