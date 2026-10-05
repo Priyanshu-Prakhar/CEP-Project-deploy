@@ -28,6 +28,7 @@
       <a href="{% url 'hospitals:list' %}" {% if request.resolver_match.app_name == 'hospitals' %}class="is-active"{% endif %}>Hospitals</a>
       <a href="{% url 'prediction:start' %}" {% if request.resolver_match.app_name == 'prediction' %}class="is-active"{% endif %}>Symptom checker</a>
       <a href="{% url 'core:about' %}" {% if request.resolver_match.url_name == 'about' %}class="is-active"{% endif %}>About</a>
+      <a href="{% url 'bmi:bmi' %}" {% if request.resolver_match.url_name == 'bmi' %}class="is-active"{% endif %}>BMI</a>
       <a href="tel:{{ EMERGENCY_NUMBER }}" class="nav__sos">☎ {{ EMERGENCY_NUMBER }}</a>
     </nav>
   </div>
