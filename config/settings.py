@@ -1,3 +1,4 @@
+import os
 """
 Django settings for the Healthcare Awareness & Literacy Platform.
 Community Engagement Project.
@@ -9,6 +10,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: change this before deploying anywhere public.
 SECRET_KEY = "django-insecure-change-me-for-production-cep-healthcare-2026"
+
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 DEBUG = True
 
