@@ -11,4 +11,5 @@ urlpatterns = [
     path("schemes/", include("schemes.urls")),
     path("hospitals/", include("hospitals.urls")),
     path("symptom-checker/", include("prediction.urls")),
+    path("bmi/", include("bmi.urls")),
 ]

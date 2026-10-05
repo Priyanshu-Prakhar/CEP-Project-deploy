@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "schemes",
     "hospitals",
     "prediction",
+    "bmi",
 ]
 
 MIDDLEWARE = [
