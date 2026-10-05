@@ -317,12 +317,7 @@ def result(request):
         })
 
     top = outcome["top"]
-    _log_check(
-        symptoms=",".join(state["symptoms"]),
-        predicted_disease=top["disease"], confidence=top["confidence"],
-        urgency=outcome["urgency"], used_labs=bool(state.get("labs")),
-        answered_questions=state.get("answered", 0), city=city,
-    )
+    _log_check()
 
     info = DiseaseInfo.objects.filter(name=top["disease"]).first()
     alt_info = {d.name: d for d in DiseaseInfo.objects.filter(
